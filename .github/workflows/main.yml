@@ -9,11 +9,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Build & Push Image
-    
-      run:
-        echo "${{ secrets.DOCKERPW }}" | docker login -u "raisanjivj6693" --password-stdin 
-        
+    - name: Build and push Docker image
+    env:
+      DOCKER_PASSWORD: ${{ secrets.DOCKERPW }}
+      run: |
+        echo "$DOCKER_PASSWORD" | docker login -u "raisanjivj6693" --password-stdin
         docker image build -t raisanjivj6693/pyflask:latest .
-        
         docker push raisanjivj6693/pyflask:latest
